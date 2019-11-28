@@ -1,3 +1,4 @@
 *.class
 private.xml
 /dist/
+/build/
