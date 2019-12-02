@@ -5,6 +5,8 @@
  */
 package br.com.treino;
 
+import javax.swing.JTextField;
+
 /**
  *
  * @author User
@@ -157,6 +159,11 @@ public class JavaIII extends javax.swing.JFrame {
         );
 
         jButton1.setText("Limpar Campos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Preencher Campos");
 
@@ -202,6 +209,19 @@ public class JavaIII extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        //jTextField1.setText("");
+        JTextField[] campos = camposCliente();
+        for (int i=0; i<campos.length;i++){
+            campos[i].setText("");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    private JTextField[] camposCliente(){
+        JTextField[] campos = {jTextField1, jTextField2, jTextField3,jTextField4,jTextField5,jTextField6};
+        return campos;
+    }
     /**
      * @param args the command line arguments
      */
