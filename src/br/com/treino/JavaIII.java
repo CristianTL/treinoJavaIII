@@ -8,6 +8,7 @@ package br.com.treino;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
@@ -198,7 +199,7 @@ public class JavaIII extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setText("Limpar Campos (Componentes)");
+        jButton6.setText("Limpar Campos (Componentes com instanceof)");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -309,8 +310,13 @@ public class JavaIII extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        limparCampos(jPanel1);
+        limparCampos(jPanel2);
+    }//GEN-LAST:event_jButton6ActionPerformed
+    
+    public void limparCampos(JPanel jpanel){
         int contaTF = 0, contaJB = 0;
-        Component[] componentes = jPanel1.getComponents();
+        Component[] componentes = jpanel.getComponents();
         for(int i=0;i< componentes.length; i++){
             if(componentes[i] instanceof JTextField){
                 contaTF++;
@@ -321,8 +327,8 @@ public class JavaIII extends javax.swing.JFrame {
                 contaJB++;
             }
         }
-        JOptionPane.showMessageDialog(null, "TextField.: " + contaTF + "\n JLabel.:" + contaJB);
-    }//GEN-LAST:event_jButton6ActionPerformed
+        //JOptionPane.showMessageDialog(null, "TextField.: " + contaTF + "\n JLabel.:" + contaJB);
+    }
     
     private JTextField[] camposCliente(){
         JTextField[] campos = {jTextField1, jTextField2, jTextField3,jTextField4,jTextField5,jTextField6};
