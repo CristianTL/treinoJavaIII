@@ -5,6 +5,9 @@
  */
 package br.com.internacionalizacao3;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 /**
  *
  * @author User
@@ -53,6 +56,11 @@ public class NewJFrame extends javax.swing.JFrame {
 
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setText("Inglês");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("Portuguesa");
@@ -166,6 +174,23 @@ public class NewJFrame extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+        Locale.setDefault(new Locale("en","US"));
+        Locale locale = Locale.getDefault();
+        ResourceBundle idioma = ResourceBundle.getBundle("br.com.internacionalizacao3.Lingua", locale);
+        jLabel1.setText(idioma.getString("escolha"));
+        jLabel2.setText(idioma.getString("codigo"));
+        jLabel3.setText(idioma.getString("nome"));
+        jLabel4.setText(idioma.getString("fone"));
+        jButton1.setText(idioma.getString("primeiro"));
+        jButton2.setText(idioma.getString("anterior"));
+        jButton3.setText(idioma.getString("proximo"));
+        jButton4.setText(idioma.getString("ultimo"));
+        this.setTitle(idioma.getString("tituloForm"));
+        
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     /**
      * @param args the command line arguments
