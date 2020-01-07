@@ -133,6 +133,12 @@ public class Depuracao extends javax.swing.JFrame {
         soma = n1 + n2;
         txtResultado.setText(""+ soma);
         
+        String[] nomes= {"Thomaz", "Cristian", "Lourenco"};
+        
+        for(int i = 0; i < nomes.length; i++){
+            System.out.println(nomes[i]);
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
