@@ -215,6 +215,7 @@ public class FormJTable extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        boolean encontrou = false;
         String pesquisaNome = JOptionPane.showInputDialog("Pesquise o nome");
         if ( pesquisaNome.length() > 0){
             for(int x = 0; x < jTable1.getRowCount(); x++){
@@ -222,10 +223,15 @@ public class FormJTable extends javax.swing.JFrame {
                   tfNome.setText(jTable1.getValueAt(x, 0).toString());
                   tfTelefone.setText(jTable1.getValueAt(x, 1).toString());
                   tfEmail.setText(jTable1.getValueAt(x, 2).toString());
+                  encontrou = true;
+                  break;
                 }
                 //JOptionPane.showMessageDialog(null, jTable1.getValueAt(x, 0));
             }
         }
+        
+        if(encontrou == false)
+            JOptionPane.showMessageDialog(null, "O nome " + pesquisaNome + " não foi encontrado");
         
     }//GEN-LAST:event_jButton4ActionPerformed
 
