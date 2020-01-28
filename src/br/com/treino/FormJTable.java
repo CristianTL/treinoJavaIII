@@ -82,6 +82,16 @@ public class FormJTable extends javax.swing.JFrame {
                 "Nome", "Telefone", "E-mail"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTable1KeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton3.setText("Excluir registro");
@@ -235,6 +245,24 @@ public class FormJTable extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        selecionaTextField();
+        
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyReleased
+        // TODO add your handling code here:
+        selecionaTextField();
+    }//GEN-LAST:event_jTable1KeyReleased
+    
+    public void selecionaTextField(){
+        int indiceLinha = jTable1.getSelectedRow();
+        tfNome.setText(jTable1.getValueAt(indiceLinha, 0).toString());
+        tfTelefone.setText(jTable1.getValueAt(indiceLinha, 1).toString());
+        tfEmail.setText(jTable1.getValueAt(indiceLinha, 2).toString()); 
+    }
+    
     /**
      * @param args the command line arguments
      */
