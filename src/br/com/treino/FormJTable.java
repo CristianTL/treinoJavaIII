@@ -193,11 +193,7 @@ public class FormJTable extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        for(int i = 0; i < jPanel1.getComponentCount(); i++){
-            if (jPanel1.getComponent(i) instanceof JTextField){
-                ((JTextField) jPanel1.getComponent(i)).setText("");
-            }
-        }
+        limparCampos();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -214,10 +210,19 @@ public class FormJTable extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        int linhaRegistro = jTable1.getSelectedRow();
         if (jTable1.getSelectedRow() != -1){
             //JOptionPane.showMessageDialog(null, "OK");
             DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
             dtm.removeRow(jTable1.getSelectedRow());
+            int totalRegistros = jTable1.getRowCount();
+            if (totalRegistros > linhaRegistro) {
+                    jTable1.setRowSelectionInterval(linhaRegistro, linhaRegistro);
+                    selecionaTextField();
+            } else {
+                limparCampos();
+            }
+            
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha!");
         }
@@ -261,6 +266,14 @@ public class FormJTable extends javax.swing.JFrame {
         tfNome.setText(jTable1.getValueAt(indiceLinha, 0).toString());
         tfTelefone.setText(jTable1.getValueAt(indiceLinha, 1).toString());
         tfEmail.setText(jTable1.getValueAt(indiceLinha, 2).toString()); 
+    }
+    
+    public void limparCampos(){
+        for(int i = 0; i < jPanel1.getComponentCount(); i++){
+            if (jPanel1.getComponent(i) instanceof JTextField){
+                ((JTextField) jPanel1.getComponent(i)).setText("");
+            }
+        }
     }
     
     /**
