@@ -313,6 +313,7 @@ public class FormJTable extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        Pessoa objPessoa;
         try{
             ObjectInputStream lerDados = new ObjectInputStream(new FileInputStream(new File("arquivo.dat")));
             pessoa = (ArrayList) lerDados.readObject(); 
@@ -326,7 +327,12 @@ public class FormJTable extends javax.swing.JFrame {
         Object campos[] = new Object[3];
         Iterator iterator = pessoa.iterator();
         while(iterator.hasNext()){
-            
+            objPessoa = (Pessoa) iterator.next();
+            campos[0] = objPessoa.getNome();
+            campos[1] = objPessoa.getTelefone();
+            campos[2] = objPessoa.getEmail();
+            DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+            dtm.addRow(campos);
         }
         
     }//GEN-LAST:event_jButton6ActionPerformed
