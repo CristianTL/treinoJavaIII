@@ -25,6 +25,9 @@ public class ModeloTabela extends AbstractTableModel {
         this.resultset = resultset;
         resultset.last(); //ultimo registro
         linhas = resultset.getRow(); // pega o numero da linha em que se encontra
+        
+        //acionar alterações da estrutura no jTable
+        fireTableStructureChanged();
     }
 
     @Override
@@ -44,10 +47,19 @@ public class ModeloTabela extends AbstractTableModel {
         }
         return colunas;
     }
-
+    
+    // Povoando os dados
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            resultset.absolute(rowIndex + 1);
+            return resultset.getObject(columnIndex + 1);
+        } catch (SQLException erro){
+            System.out.println("Erro: " + erro);
+            return "";
+        }
+        
     }
     
 }
