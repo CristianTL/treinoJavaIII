@@ -5,6 +5,8 @@
  */
 package br.com.treino;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author User
@@ -14,8 +16,17 @@ public class FormJTableMetadados extends javax.swing.JFrame {
     /**
      * Creates new form FormJTableMetadados
      */
+    Conexao conexaoBanco;
     public FormJTableMetadados() {
         initComponents();
+        try{
+            conexaoBanco = new Conexao();
+            conexaoBanco.conecta();
+            conexaoBanco.executeSQL("Select * from pessoa");
+            jTable1.setModel(new ModeloTabela(conexaoBanco.resultset));
+        } catch(SQLException erro){
+            System.out.println("Erro: " + erro);
+        }
     }
 
     /**
