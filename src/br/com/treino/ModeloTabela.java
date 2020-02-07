@@ -29,6 +29,15 @@ public class ModeloTabela extends AbstractTableModel {
         //acionar alterações da estrutura no jTable
         fireTableStructureChanged();
     }
+    
+    @Override
+    public String getColumnName(int column){
+        try{
+            return rsMetaData.getColumnName(column+1);
+        }catch(SQLException erro){
+            return "";
+        }
+    }
 
     @Override
     public int getRowCount() {
