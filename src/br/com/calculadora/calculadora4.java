@@ -12,13 +12,13 @@ import javax.swing.JTextField;
  *
  * @author User
  */
-public class calculadora3 extends javax.swing.JFrame {
+public class calculadora4 extends javax.swing.JFrame {
     
     private double n1, n2, resultado;
     /**
      * Creates new form calculadora1
      */
-    public calculadora3() {
+    public calculadora4() {
         initComponents();
     }
 
@@ -49,7 +49,7 @@ public class calculadora3 extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel1.setText("Calculadora 3");
+        jLabel1.setText("Calculadora 4");
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -190,36 +190,31 @@ public class calculadora3 extends javax.swing.JFrame {
     private void btSomarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSomarActionPerformed
         // TODO add your handling code here:
         converter();
-        resultado = n1 + n2;
-        jTextFieldResultado.setText(""+resultado);
+        calcular("+");
     }//GEN-LAST:event_btSomarActionPerformed
 
     private void btMultiplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMultiplicarActionPerformed
         // TODO add your handling code here:
         converter();
-        resultado = n1 * n2;
-        jTextFieldResultado.setText(""+resultado);
+        calcular("*");
     }//GEN-LAST:event_btMultiplicarActionPerformed
 
     private void btDividirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDividirActionPerformed
         // TODO add your handling code here:
         converter();
-        resultado = n1 / n2;
-        jTextFieldResultado.setText(""+resultado);
+        calcular("/");
     }//GEN-LAST:event_btDividirActionPerformed
 
     private void btSubtrairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSubtrairActionPerformed
         // TODO add your handling code here:
         converter();
-        resultado = n1 - n2;
-        jTextFieldResultado.setText(""+resultado);
+        calcular("-");
     }//GEN-LAST:event_btSubtrairActionPerformed
 
     private void btMediaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMediaActionPerformed
         // TODO add your handling code here:
         converter();
-        resultado = (n1 + n2) / 2;
-        jTextFieldResultado.setText(""+resultado);
+        calcular("media");        
     }//GEN-LAST:event_btMediaActionPerformed
 
     private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
@@ -233,6 +228,21 @@ public class calculadora3 extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btLimparActionPerformed
+    
+    public void calcular(String tipo){
+        if(tipo.equals("+"))
+            resultado = n1 + n2;
+        else if(tipo.equals("-"))
+            resultado = n1 - n2;
+        else if(tipo.equals("*"))
+            resultado = n1 * n2;
+        else if(tipo.equals("/"))
+            resultado = n1 / n2;
+        else if(tipo.equals("media"))
+            resultado = (n1 + n2) / 2;
+        
+        jTextFieldResultado.setText(""+resultado);
+    }
     
     public void converter(){
         if (jTextField1.getText().equals("") || jTextField2.getText().equals("")){
@@ -264,14 +274,18 @@ public class calculadora3 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(calculadora3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(calculadora4.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(calculadora3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(calculadora4.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(calculadora3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(calculadora4.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(calculadora3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(calculadora4.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -280,7 +294,7 @@ public class calculadora3 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new calculadora3().setVisible(true);
+                new calculadora4().setVisible(true);
             }
         });
     }
