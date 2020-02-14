@@ -12,13 +12,13 @@ import javax.swing.JTextField;
  *
  * @author User
  */
-public class calculadora5 extends javax.swing.JFrame {
+public class calculadora6 extends javax.swing.JFrame {
     
     private double n1, n2, resultado;
     /**
      * Creates new form calculadora1
      */
-    public calculadora5() {
+    public calculadora6() {
         initComponents();
     }
 
@@ -49,7 +49,7 @@ public class calculadora5 extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel1.setText("calculadora 5");
+        jLabel1.setText("Calculadora 6");
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -243,21 +243,34 @@ public class calculadora5 extends javax.swing.JFrame {
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         // TODO add your handling code here:
+        /*
         if((evt.getKeyCode() < 48 || evt.getKeyCode() > 57) && (evt.getKeyCode() != 8 && evt.getKeyCode() != 46)){
             if(jTextField1.getText().length() > 0)
                 jTextField1.setText(jTextField1.getText().substring(0, jTextField1.getText().length()-1));
             
         }
+        if(evt.getKeyCode() == 44)
+            jTextField1.setText(jTextField1.getText()+".");
+        */
+        validaNumero(jTextField1, evt);
     }//GEN-LAST:event_jTextField1KeyReleased
 
     private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
         // TODO add your handling code here:
+        validaNumero(jTextField2, evt);
+    }//GEN-LAST:event_jTextField2KeyReleased
+    
+    public void validaNumero(JTextField texto, java.awt.event.KeyEvent evt){
         if((evt.getKeyCode() < 48 || evt.getKeyCode() > 57) && (evt.getKeyCode() != 8 && evt.getKeyCode() != 46)){
-            if(jTextField2.getText().length() > 0)
-                jTextField2.setText(jTextField2.getText().substring(0, jTextField2.getText().length()-1));
+            if(texto.getText().length() > 0)
+                texto.setText(texto.getText().substring(0, texto.getText().length()-1));
             
         }
-    }//GEN-LAST:event_jTextField2KeyReleased
+        if(evt.getKeyCode() == 44)
+            texto.setText(texto.getText()+".");
+    }
+    
+    
     
     public void calcular(String tipo){
         if(tipo.equals("+"))
@@ -313,14 +326,30 @@ public class calculadora5 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(calculadora5.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(calculadora6.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(calculadora5.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(calculadora6.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(calculadora5.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(calculadora6.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(calculadora5.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(calculadora6.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -341,7 +370,7 @@ public class calculadora5 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new calculadora5().setVisible(true);
+                new calculadora6().setVisible(true);
             }
         });
     }
