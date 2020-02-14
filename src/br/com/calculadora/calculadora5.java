@@ -57,6 +57,12 @@ public class calculadora5 extends javax.swing.JFrame {
 
         jLabel3.setText("Numero 2.:");
 
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
+
         btSomar.setText("+");
         btSomar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,6 +234,15 @@ public class calculadora5 extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btLimparActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        // TODO add your handling code here:
+        if((evt.getKeyCode() < 48 || evt.getKeyCode() > 57) && (evt.getKeyCode() != 8 && evt.getKeyCode() != 46)){
+            if(jTextField1.getText().length() > 0)
+                jTextField1.setText(jTextField1.getText().substring(0, jTextField1.getText().length()-1));
+            
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
     
     public void calcular(String tipo){
         if(tipo.equals("+"))
