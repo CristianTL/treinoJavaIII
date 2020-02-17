@@ -58,12 +58,18 @@ public class calculadora6 extends javax.swing.JFrame {
         jLabel3.setText("Numero 2.:");
 
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField1KeyReleased(evt);
             }
         });
 
         jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField2KeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField2KeyReleased(evt);
             }
@@ -259,9 +265,24 @@ public class calculadora6 extends javax.swing.JFrame {
         // TODO add your handling code here:
         validaNumero(jTextField2, evt);
     }//GEN-LAST:event_jTextField2KeyReleased
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == 10){
+            jTextField2.requestFocus();
+        }
+    }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == 10){
+            jTextField1.requestFocus();
+        }
+    }//GEN-LAST:event_jTextField2KeyPressed
     
     public void validaNumero(JTextField texto, java.awt.event.KeyEvent evt){
-        if((evt.getKeyCode() < 48 || evt.getKeyCode() > 57) && (evt.getKeyCode() != 8 && evt.getKeyCode() != 46)){
+        if((evt.getKeyCode() < 48 || evt.getKeyCode() > 57) && (evt.getKeyCode() != 8 && evt.getKeyCode() != 46)
+                && evt.getKeyCode() != 10){
             if(texto.getText().length() > 0)
                 texto.setText(texto.getText().substring(0, texto.getText().length()-1));
             
