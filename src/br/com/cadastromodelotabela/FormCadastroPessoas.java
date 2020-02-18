@@ -5,17 +5,28 @@
  */
 package br.com.cadastromodelotabela;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author User
  */
 public class FormCadastroPessoas extends javax.swing.JFrame {
-
+    
+    Conexao conexaoBanco;
     /**
      * Creates new form FormCadastroPessoas
      */
     public FormCadastroPessoas() {
         initComponents();
+        try{
+            conexaoBanco = new Conexao();
+            conexaoBanco.conecta();
+            conexaoBanco.executeSQL("Select * from pessoa");
+            jTable1.setModel(new ModeloTabelaPessoa(conexaoBanco.resultset));
+        } catch(SQLException erro){
+            System.out.println("Erro: " + erro);
+        }
     }
 
     /**

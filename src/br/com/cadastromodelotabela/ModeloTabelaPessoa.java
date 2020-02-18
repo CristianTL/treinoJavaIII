@@ -24,14 +24,22 @@ public class ModeloTabelaPessoa extends AbstractTableModel{
         "Codigo", "Nome da Pessoa", "Telefone", "Email"
     };
     
+    public String getColumnName(int quantascolunas){
+        return nomesColunas[quantascolunas];
+    }
+    
+    public ModeloTabelaPessoa(ResultSet resultset) throws SQLException{
+        setResult(resultset);
+    }
+    
     public void setResult(ResultSet resultset) throws SQLException{
         resultSetPessoas = new ArrayList<String[]>();
         while(resultset.next()){
             String[] linha = {
-                resultset.getString("codigo"), 
-                resultset.getString("nome"), 
-                resultset.getString("fone"), 
-                resultset.getString("email")
+                resultset.getString("pesCodigo"), 
+                resultset.getString("pesNome"), 
+                resultset.getString("pesFone"), 
+                resultset.getString("pesEmail")
             };
             resultSetPessoas.add(linha);
         }
