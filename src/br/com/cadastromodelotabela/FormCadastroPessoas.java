@@ -6,6 +6,7 @@
 package br.com.cadastromodelotabela;
 
 import java.sql.SQLException;
+import javax.swing.JTextField;
 
 /**
  *
@@ -19,6 +20,7 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
      */
     public FormCadastroPessoas() {
         initComponents();
+        desabilitarCampos();
         try{
             conexaoBanco = new Conexao();
             conexaoBanco.conecta();
@@ -27,6 +29,32 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
         } catch(SQLException erro){
             System.out.println("Erro: " + erro);
         }
+    }
+    
+    private JTextField[] camposPessoa(){
+        JTextField[] textField = {tfCodigo, tfEmail, tfFone, tfNome};
+        return textField;
+    }
+    
+    private void desabilitarCampos(){     
+        //JTextField[] textField = camposPessoa();       
+        for(int i = 0; i < camposPessoa().length; i++ ){
+          camposPessoa()[i].setEnabled(false);
+        }    
+    }
+    
+    private void habilitarCampos(){     
+        //JTextField[] textField = camposPessoa();       
+        for(int i = 0; i < camposPessoa().length; i++ ){
+          camposPessoa()[i].setEnabled(true);
+        }    
+    }
+    
+    private void limparCampos(){     
+        //JTextField[] textField = camposPessoa();       
+        for(int i = 0; i < camposPessoa().length; i++ ){
+          camposPessoa()[i].setText("");
+        }    
     }
 
     /**
@@ -52,9 +80,9 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
         tfNome = new javax.swing.JTextField();
         tfFone = new javax.swing.JTextField();
         tfEmail = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btNovo = new javax.swing.JButton();
+        btGravar = new javax.swing.JButton();
+        btExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -151,11 +179,18 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Dados da Pessoa", jPanel2);
 
-        jButton1.setText("Novo");
+        btNovo.setText("Novo");
+        btNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNovoActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Gravar");
+        btGravar.setText("Gravar");
+        btGravar.setEnabled(false);
 
-        jButton3.setText("Excluir");
+        btExcluir.setText("Excluir");
+        btExcluir.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,11 +208,11 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(btNovo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
+                .addComponent(btGravar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addComponent(btExcluir)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -189,14 +224,22 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btNovo)
+                    .addComponent(btGravar)
+                    .addComponent(btExcluir))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
+        // TODO add your handling code here:
+        jTabbedPane1.setSelectedIndex(1);
+        habilitarCampos();
+        tfCodigo.requestFocus();
+        btGravar.setEnabled(true);
+    }//GEN-LAST:event_btNovoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -234,9 +277,9 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btExcluir;
+    private javax.swing.JButton btGravar;
+    private javax.swing.JButton btNovo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
