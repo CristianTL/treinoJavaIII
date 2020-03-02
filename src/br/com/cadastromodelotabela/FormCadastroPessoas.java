@@ -5,6 +5,7 @@
  */
 package br.com.cadastromodelotabela;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JTextField;
 
@@ -15,6 +16,9 @@ import javax.swing.JTextField;
 public class FormCadastroPessoas extends javax.swing.JFrame {
     
     Conexao conexaoBanco;
+    ModeloTabelaPessoa modeloTabelaPessoa;
+    String codigoLinha;
+    ResultSet resultSetAux;
     /**
      * Creates new form FormCadastroPessoas
      */
@@ -25,14 +29,15 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
             conexaoBanco = new Conexao();
             conexaoBanco.conecta();
             conexaoBanco.executeSQL("Select * from pessoa");
-            jTable1.setModel(new ModeloTabelaPessoa(conexaoBanco.resultset));
+            modeloTabelaPessoa = new ModeloTabelaPessoa(conexaoBanco.resultset);
+            jTable1.setModel(modeloTabelaPessoa);
         } catch(SQLException erro){
             System.out.println("Erro: " + erro);
         }
     }
     
     private JTextField[] camposPessoa(){
-        JTextField[] textField = {tfCodigo, tfEmail, tfFone, tfNome};
+        JTextField[] textField = {tfCodigo, tfNome, tfFone, tfEmail};
         return textField;
     }
     
@@ -102,6 +107,11 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -240,6 +250,29 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
         tfCodigo.requestFocus();
         btGravar.setEnabled(true);
     }//GEN-LAST:event_btNovoActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        btExcluir.setEnabled(true);
+        codigoLinha = (String) modeloTabelaPessoa.getValueAt(jTable1.getSelectedRow(), 0);
+        
+        if (evt.getClickCount() == 2) {
+            jTabbedPane1.setSelectedIndex(1);
+            habilitarCampos();
+            JTextField[] textField = camposPessoa();
+            String sql = "select * from pessoa where pesCodigo = " + codigoLinha;
+            try{
+                conexaoBanco.executeSQL(sql);
+                conexaoBanco.resultset.next();
+                for(int i=0; i < textField.length; i++){
+                    textField[i].setText(conexaoBanco.resultset.getString(i+1));
+                }
+            }catch(SQLException erro){
+
+            }
+        }
+
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
