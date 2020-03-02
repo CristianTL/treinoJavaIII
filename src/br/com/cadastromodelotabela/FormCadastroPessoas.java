@@ -7,6 +7,9 @@ package br.com.cadastromodelotabela;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -201,6 +204,11 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
 
         btExcluir.setText("Excluir");
         btExcluir.setEnabled(false);
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -267,12 +275,33 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
                 for(int i=0; i < textField.length; i++){
                     textField[i].setText(conexaoBanco.resultset.getString(i+1));
                 }
+                tfCodigo.requestFocus();
             }catch(SQLException erro){
 
             }
         }
 
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        // TODO add your handling code here:
+        int opcaoEscolhida = JOptionPane.showConfirmDialog(
+                this, 
+                "Exclusão",
+                "Excluir registro? ", 
+                JOptionPane.YES_NO_OPTION
+        );
+        if(opcaoEscolhida == JOptionPane.YES_OPTION){
+            String sql = "Delete from pessoa where pesCodigo = " + codigoLinha;
+            try {
+                conexaoBanco.statement.executeUpdate(sql);
+                JOptionPane.showMessageDialog(null, "Excluido com sucesso");
+                modeloTabelaPessoa.deletarLinha(jTable1.getSelectedRow());
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao excluir");
+            }
+        }
+    }//GEN-LAST:event_btExcluirActionPerformed
 
     /**
      * @param args the command line arguments
