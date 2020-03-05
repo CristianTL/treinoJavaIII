@@ -24,7 +24,7 @@ public class Conexao {
     String usuario = "root";
     String senha = "";        
     
-    private Connection conexao;
+    public Connection connection;
     public Statement statement;
     public ResultSet resultset; 
     
@@ -34,7 +34,7 @@ public class Conexao {
         boolean result = true;
         try{
             Class.forName(driver);
-            conexao = DriverManager.getConnection(url, usuario, senha);
+            connection = DriverManager.getConnection(url, usuario, senha);
             //JOptionPane.showMessageDialog(null, "Conectou com ");            
             
         } catch (ClassNotFoundException Driver) {
@@ -53,7 +53,7 @@ public class Conexao {
     {
         boolean result = true;
         try{
-            conexao.close();
+            connection.close();
             JOptionPane.showMessageDialog(null, "banco fechado");
         } catch (SQLException erroSQL) {
             // erroSQL ou erroSQL.getMessage()
@@ -66,7 +66,7 @@ public class Conexao {
         
         try{
             //Com os parâmetros permitirá navegar entre os registros
-            statement = conexao.createStatement(
+            statement = connection.createStatement(
                     ResultSet.TYPE_SCROLL_SENSITIVE, 
                     ResultSet.CONCUR_READ_ONLY
             );

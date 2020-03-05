@@ -5,6 +5,7 @@
  */
 package br.com.cadastromodelotabela;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -201,6 +202,11 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
 
         btGravar.setText("Gravar");
         btGravar.setEnabled(false);
+        btGravar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btGravarActionPerformed(evt);
+            }
+        });
 
         btExcluir.setText("Excluir");
         btExcluir.setEnabled(false);
@@ -302,6 +308,28 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btExcluirActionPerformed
+
+    private void btGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGravarActionPerformed
+        // TODO add your handling code here:
+        try{
+            String sql = "insert into pessoa values " + "(?,?,?,?)";
+            PreparedStatement ps = conexaoBanco.connection.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(tfCodigo.getText()));
+            ps.setString(2, tfNome.getText());
+            ps.setString(3, tfFone.getText());
+            ps.setString(4, tfEmail.getText());
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Gravado com sucesso");
+            conexaoBanco.executeSQL("select * from pessoa");
+            modeloTabelaPessoa.setResult(conexaoBanco.resultset);
+            jTabbedPane1.setSelectedIndex(0);
+            desabilitarCampos();
+            btExcluir.setEnabled(false);
+            btGravar.setEnabled(false);
+        } catch(SQLException erro){
+            JOptionPane.showMessageDialog(null, erro);
+        }
+    }//GEN-LAST:event_btGravarActionPerformed
 
     /**
      * @param args the command line arguments
