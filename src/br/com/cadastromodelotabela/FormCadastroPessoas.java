@@ -23,6 +23,7 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
     ModeloTabelaPessoa modeloTabelaPessoa;
     String codigoLinha;
     ResultSet resultSetAux;
+    boolean novo=true;
     /**
      * Creates new form FormCadastroPessoas
      */
@@ -260,6 +261,7 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
         // TODO add your handling code here:
         jTabbedPane1.setSelectedIndex(1);
+        novo = true;
         habilitarCampos();
         tfCodigo.requestFocus();
         btGravar.setEnabled(true);
@@ -271,6 +273,8 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
         codigoLinha = (String) modeloTabelaPessoa.getValueAt(jTable1.getSelectedRow(), 0);
         
         if (evt.getClickCount() == 2) {
+            btGravar.setEnabled(true);
+            novo = false;
             jTabbedPane1.setSelectedIndex(1);
             habilitarCampos();
             JTextField[] textField = camposPessoa();
@@ -311,6 +315,16 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
 
     private void btGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGravarActionPerformed
         // TODO add your handling code here:
+         //gravaNovoRegistro();
+         if (novo){
+            gravaNovoRegistro1();
+         } else {
+            alteraRegistro();
+         }
+         
+    }//GEN-LAST:event_btGravarActionPerformed
+    
+    public void gravaNovoRegistro(){
         try{
             String sql = "insert into pessoa values " + "(?,?,?,?)";
             PreparedStatement ps = conexaoBanco.connection.prepareStatement(sql);
@@ -329,8 +343,27 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
         } catch(SQLException erro){
             JOptionPane.showMessageDialog(null, erro);
         }
-    }//GEN-LAST:event_btGravarActionPerformed
-
+    }
+    
+    public void gravaNovoRegistro1(){
+        JTextField[] tf = camposPessoa();
+        try{
+            String sql = "insert into pessoa values " + "(?,?,?,?)";
+            PreparedStatement ps = conexaoBanco.connection.prepareStatement(sql);
+            for (int i=0; i<tf.length;i++)
+                ps.setString(i+1, tf[i].getText());           
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Gravado com sucesso");
+            conexaoBanco.executeSQL("select * from pessoa");
+            modeloTabelaPessoa.setResult(conexaoBanco.resultset);
+            jTabbedPane1.setSelectedIndex(0);
+            desabilitarCampos();
+            btExcluir.setEnabled(false);
+            btGravar.setEnabled(false);
+        } catch(SQLException erro){
+            JOptionPane.showMessageDialog(null, erro);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -385,4 +418,31 @@ public class FormCadastroPessoas extends javax.swing.JFrame {
     private javax.swing.JTextField tfFone;
     private javax.swing.JTextField tfNome;
     // End of variables declaration//GEN-END:variables
+
+    private void alteraRegistro() {
+        
+        try{
+            String sql = "update pessoa set "
+                    + "pesNome=?, pesFone=?, pesEmail=? where pesCodigo=?";
+            JOptionPane.showMessageDialog(null, sql);
+            PreparedStatement ps = conexaoBanco.connection.prepareStatement(sql);
+            
+            ps.setString(1, tfNome.getText());
+            ps.setString(2, tfFone.getText());
+            ps.setString(3, tfEmail.getText());
+            ps.setInt(4, Integer.parseInt(tfCodigo.getText()));
+            
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Alterado com sucesso");
+             conexaoBanco.executeSQL("select * from pessoa");
+            modeloTabelaPessoa.setResult(conexaoBanco.resultset);
+            jTabbedPane1.setSelectedIndex(0);
+            desabilitarCampos();
+            btExcluir.setEnabled(false);
+            btGravar.setEnabled(false);
+            novo=true;
+        } catch(SQLException erro){
+            JOptionPane.showMessageDialog(null, " Erro: " + erro);          
+        }
+    }
 }
