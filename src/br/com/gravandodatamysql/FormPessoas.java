@@ -8,6 +8,8 @@ package br.com.gravandodatamysql;
 import br.com.cadastropreparestatement.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,11 +21,26 @@ public class FormPessoas extends javax.swing.JFrame {
     Conexao conPessoa;
     /**
      * Creates new form FormPessoas
+     * @throws java.sql.SQLException
      */
-    public FormPessoas() {
+    public FormPessoas() throws SQLException {
         initComponents();
         conPessoa = new Conexao();
         conPessoa.conecta();
+        conPessoa.executeSQL("select * from pessoa");
+        conPessoa.resultset.last();
+        tfCodigo.setText(conPessoa.resultset.getString("pesCodigo"));
+        tfNome.setText(conPessoa.resultset.getString("pesNome"));
+        tfFone.setText(conPessoa.resultset.getString("pesFone"));
+        tfEmail.setText(conPessoa.resultset.getString("pesEmail"));
+        tfDataNasc.setText(conPessoa.resultset.getString("pesDataNasc"));
+        
+        String dia = tfDataNasc.getText().substring(8);
+        String mes = tfDataNasc.getText().substring(5,7);
+        String ano = tfDataNasc.getText().substring(0,4);
+        tfDataNasc.setText(dia+"/"+mes+"/"+ano);
+ 
+                
     }
 
     /**
@@ -181,7 +198,12 @@ public class FormPessoas extends javax.swing.JFrame {
             ps.setString(2, tfNome.getText());
             ps.setString(3, tfFone.getText());
             ps.setString(4, tfEmail.getText());
-            ps.setString(5, tfDataNasc.getText());
+            //ps.setString(5, tfDataNasc.getText());
+            //Forma numero 1
+            String dia = tfDataNasc.getText().substring(0,2);
+            String mes = tfDataNasc.getText().substring(3,5);
+            String ano = tfDataNasc.getText().substring(6);
+            ps.setString(5,ano+"-"+mes+"-"+dia);
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Gravado com sucesso");
             
@@ -240,7 +262,11 @@ public class FormPessoas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormPessoas().setVisible(true);
+                try {
+                    new FormPessoas().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FormPessoas.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
