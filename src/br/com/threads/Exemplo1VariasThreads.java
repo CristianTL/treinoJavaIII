@@ -20,6 +20,9 @@ public class Exemplo1VariasThreads {
         ExecutaThread2 thread = new ExecutaThread2();
         ExecutaThread2 thread2 = new ExecutaThread2();
         ExecutaThread2 thread3 = new ExecutaThread2();
+        thread2.setPriority(10);
+        thread3.setPriority(9);
+        System.out.println("Prioridade da thread = " + thread2.getPriority());
         thread.start();
         thread2.start();
         thread3.start();

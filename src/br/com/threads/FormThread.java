@@ -50,6 +50,11 @@ public class FormThread extends javax.swing.JFrame {
         });
 
         jButton2.setText("Mostrar Tabuada do numero 7 - Com Thread");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Limpar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -121,6 +126,26 @@ public class FormThread extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        new TabuadaThread().start();
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    class TabuadaThread extends Thread {
+        public void run(){
+            try {
+                
+                // TODO add your handling code here:
+                jTextArea1.setText("Tabuada do número 7 \n");
+                for(int i=0;i<100000;i++)
+                    jTextArea1.append("7 X "+i+" = "+(7*i)+"\n");
+                JOptionPane.showMessageDialog(null, "FIM");
+                
+            } catch (Exception erro){
+                
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */
