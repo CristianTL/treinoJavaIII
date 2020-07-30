@@ -5,7 +5,15 @@
  */
 package br.com.thread.agendadetarefas;
 
+import java.awt.Toolkit;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,6 +25,9 @@ public class AgendaTarefas extends javax.swing.JFrame {
      * Creates new form AgendaTarefas
      */
     DefaultListModel dlm = new DefaultListModel();
+    Timer timer = new Timer(true); // deamon, thread de serviço
+    Calendar agenda = Calendar.getInstance();
+   
     public AgendaTarefas() {
         initComponents();
     }
@@ -38,6 +49,8 @@ public class AgendaTarefas extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         tfHorario = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,7 +61,7 @@ public class AgendaTarefas extends javax.swing.JFrame {
 
         jLabel2.setText("Agende uma tarefa: ");
 
-        jLabel3.setText("jLabel3");
+        jLabel3.setText("Horário:");
 
         tfHorario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -60,6 +73,20 @@ public class AgendaTarefas extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Excluir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Excluir Todos");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -75,7 +102,13 @@ public class AgendaTarefas extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton3)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -83,7 +116,7 @@ public class AgendaTarefas extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(tfHorario, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
+                                .addComponent(tfHorario, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE))
                             .addComponent(jScrollPane1))))
                 .addContainerGap())
         );
@@ -99,7 +132,10 @@ public class AgendaTarefas extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(tfHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(25, Short.MAX_VALUE))
@@ -114,10 +150,72 @@ public class AgendaTarefas extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String mensagem = tfHorario.getText() + " ----> " + tfTarefa.getText();
-        dlm.addElement(mensagem);
-        jList1.setModel(dlm);
+        try{
+            //hora = 15:30
+            int hora = Integer.parseInt(tfHorario.getText().substring(0,2));
+            int minuto = Integer.parseInt(tfHorario.getText().substring(3,5));
+            agenda.set(Calendar.HOUR_OF_DAY, hora);
+            agenda.set(Calendar.MINUTE, minuto);
+            agenda.set(Calendar.SECOND, 0);
+            
+            String mensagem = tfHorario.getText() + " ----> " + tfTarefa.getText();
+            LembrarTarefa lembrarTarega = new LembrarTarefa(mensagem);
+            timer.schedule(lembrarTarega, agenda.getTime());
+            dlm.addElement(mensagem);
+            jList1.setModel(dlm);
+        } catch(Exception erro){
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+    
+    class LembrarTarefa extends TimerTask {
+        
+        private String mensagemTarefa;
+        
+        public LembrarTarefa(String mensagemTarefa){
+            this.mensagemTarefa = mensagemTarefa;
+        }
+        
+        @Override
+        public void run() {
+            int indice = dlm.indexOf(mensagemTarefa);
+            jList1.setSelectedIndex(indice);
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null, mensagemTarefa);
+            dlm.remove(indice);
+            jList1.setModel(dlm);
+        }
+        
+    }
+    
+    class ExecutarComando extends TimerTask{
+        private String comando;
+        public ExecutarComando(String comando){
+            this.comando = comando;            
+        }
+
+        @Override
+        public void run() {
+            try {
+                Runtime.getRuntime().exec(comando);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi possível executar " + comando);
+            }
+        }
+    }
+    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        int indice = jList1.getSelectedIndex();
+        dlm.remove(indice);
+        jList1.setModel(dlm);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        dlm.removeAllElements();
+        jList1.setModel(dlm);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,6 +254,8 @@ public class AgendaTarefas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
