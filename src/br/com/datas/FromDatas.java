@@ -5,6 +5,14 @@
  */
 package br.com.datas;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author User
@@ -33,6 +41,10 @@ public class FromDatas extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lbDataCalendar = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        tfDataNasc = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        lbAnos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,20 +54,41 @@ public class FromDatas extends javax.swing.JFrame {
 
         jLabel2.setText("Data usando Calendar");
 
+        jLabel3.setText("Data nascimento");
+
+        jButton1.setText("Calcula Anos e dias");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(lbDataCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(tfDataNasc)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(lbDataCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(jButton1)
+                                .addGap(18, 18, 18)
+                                .addComponent(lbAnos, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(65, 65, 65))))
         );
         layout.setVerticalGroup(
@@ -67,11 +100,46 @@ public class FromDatas extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(lbDataCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(213, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(lbAnos, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Calendar calendarDataNasc = Calendar.getInstance();
+        Calendar calendarDataFinal = Calendar.getInstance();
+        DateFormat formatoData = DateFormat.getDateInstance(DateFormat.SHORT);
+        long diaMilisegundos = 1000 * 60 * 60 * 24;
+        try {
+            Date dataNasc = formatoData.parse(tfDataNasc.getText());
+            Date dataFinal = new Date();
+            calendarDataNasc.setTime(dataNasc);
+            calendarDataFinal.setTime(dataFinal);
+            long dataInicial = calendarDataNasc.getTimeInMillis();
+            long dataFim = calendarDataFinal.getTimeInMillis();
+            long anos = (dataFim - dataInicial) / (diaMilisegundos*365);
+            long dias = (dataFim - dataInicial) / (diaMilisegundos);
+            lbAnos.setText(""+anos+" e "+dias+" dias.");
+            calendarDataFinal.add(Calendar.DAY_OF_YEAR, 30);
+            Date somaTrintaDias = calendarDataFinal.getTime();
+            JOptionPane.showMessageDialog(null, "+ 30 dias \n" + somaTrintaDias);
+            
+            
+        } catch (ParseException ex) {
+            Logger.getLogger(FromDatas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -109,8 +177,12 @@ public class FromDatas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lbAnos;
     private javax.swing.JLabel lbDataCalendar;
+    private javax.swing.JTextField tfDataNasc;
     // End of variables declaration//GEN-END:variables
 }
