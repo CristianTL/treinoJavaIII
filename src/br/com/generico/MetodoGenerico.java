@@ -20,6 +20,7 @@ public class MetodoGenerico {
         imprimirArray(arrayDouble);
         imprimirArray(arrayChar);
         imprimirArray(arrayChar, "VideoTeste");
+        System.out.println("O maior é " + imprimeMaior(18,12));
     }
     
     //modelo de metodo generico
@@ -33,6 +34,14 @@ public class MetodoGenerico {
         for (E dado:inteiros) {
             System.out.println(dado + " " + nome);
         }
+    }
+    
+    public static < T extends Comparable<T>> T imprimeMaior(T num1, T num2){
+        T maior = num1;
+        if(num2.compareTo(num1) > 0){
+            maior = num2;
+        }
+        return maior;
     }
     
 }
