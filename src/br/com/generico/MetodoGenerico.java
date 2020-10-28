@@ -35,7 +35,8 @@ public class MetodoGenerico {
             System.out.println(dado + " " + nome);
         }
     }
-    
+
+//   metodo generico usando comparable    
     public static < T extends Comparable<T>> T imprimeMaior(T num1, T num2){
         T maior = num1;
         if(num2.compareTo(num1) > 0){
@@ -44,4 +45,12 @@ public class MetodoGenerico {
         return maior;
     }
     
+//  TYPE ERASURE
+//    public static Comparable imprimeMaior(Comparable num1, Comparable num2){
+//        Comparable maior = num1;
+//        if(num2.compareTo(num1) > 0){
+//            maior = num2;
+//        }
+//        return maior;
+//    }
 }
