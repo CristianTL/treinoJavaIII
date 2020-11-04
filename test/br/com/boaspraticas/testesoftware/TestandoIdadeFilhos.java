@@ -12,17 +12,12 @@ import org.junit.Test;
  */
 public class TestandoIdadeFilhos {
     
-    public static void main(String[] args) {
-                        
-    }
-    
     @Test
     public void testarSomaIdades(){
         IdadeFilhos idadeFilhos = new IdadeFilhos();
         idadeFilhos.setIdadeFilha(15);
         idadeFilhos.setIdadeFilho(10);
         System.out.println(idadeFilhos.getSomaIdades());
-
+        assertEquals(25, idadeFilhos.getSomaIdades());
     }
-    
 }
