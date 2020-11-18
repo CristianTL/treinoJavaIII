@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -20,12 +22,14 @@ import javax.swing.JOptionPane;
  * @author User
  */
 public class FormServidorCadastroAluno extends javax.swing.JFrame {
-
+    Conexao conAluno;
     /**
      * Creates new form FormServidor
      */
     public FormServidorCadastroAluno() {
         initComponents();       
+        conAluno = new Conexao();
+        conAluno.conecta();
     }
     
     class servidor extends Thread{
@@ -49,21 +53,28 @@ public class FormServidorCadastroAluno extends javax.swing.JFrame {
                     jTextArea1.append("Nome Aluno: "+ nomeAluno  +"\n");
                     jTextArea1.append("Idade do Aluno: "+ idade  +"\n");
                     jTextArea1.append("Nonta do Aluno: "+ notaAluno  +"\n");
-                    jTextArea1.append("Enviando dados para o cliente ..\n");
-                    DataOutputStream dadosSaida = new DataOutputStream(socket.getOutputStream());
-                    dadosSaida.writeUTF("Dados do aluno gravado com sucesso\n");
-                    socket.close();
                     
-                    /*
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                    objectOutputStream.flush();
-                    objectOutputStream.writeObject("ok, recebi e processei os dados com sucesso\n");
-                    objectOutputStream.writeObject("Os dados dessa conexão\n" + socket.toString() + "\n");
-                    objectOutputStream.writeObject("FIM\n");
-                    */
+                    try{
+            
+                        String sql = "insert into aluno (nome, idade, nota) values "
+                                + "(?,?,?)";
+                        PreparedStatement ps = conAluno.connection.prepareStatement(sql);
+                        ps.setString(1, nomeAluno);
+                        ps.setInt(2, idade);
+                        ps.setDouble(3, notaAluno);
+                        ps.executeUpdate();
+                        
+                        jTextArea1.append("Enviando dados para o cliente ..\n");
+                        DataOutputStream dadosSaida = new DataOutputStream(socket.getOutputStream());
+                        dadosSaida.writeUTF("Dados do aluno gravado com sucesso\n");
+                        socket.close();
+
+                    } catch(SQLException erro){
+                        JOptionPane.showMessageDialog(null,"Erro " + erro);
+                    }
+                    
                 }
-            } catch (IOException ex) {
-                //Logger.getLogger(FormServidor.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {                
                 JOptionPane.showMessageDialog(null, "Erro: " + ex);
             }
         }
