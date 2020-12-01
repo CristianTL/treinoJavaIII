@@ -44,16 +44,34 @@ public class ItextExemploTabela {
             PdfPTable tabela = new PdfPTable(3);
             PdfPCell cabecalho = new PdfPCell(new Paragraph("Lista das pessoas em geral"));
             cabecalho.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cabecalho.setBorder(PdfPCell.NO_BORDER);
             //cabecalho.setBackgroundColor(BaseColor.RED);
             cabecalho.setBackgroundColor(new BaseColor(100,150,200));
             cabecalho.setColspan(3);
             tabela.addCell(cabecalho);
+            Image imagem = Image.getInstance("brand_logo.jpg");
+            imagem.scalePercent(50);
+            imagem.setRotationDegrees(45);
             tabela.addCell("Thomaz");
             tabela.addCell("Cristian");
             tabela.addCell("Lourenco");
             tabela.addCell("Yelena");
             tabela.addCell("Yasmin");
             tabela.addCell("Ruas");
+            tabela.addCell(imagem);
+            tabela.addCell("");
+            tabela.addCell("");
+            
+            String pessoas[][] = new String[][]{
+                {"Thomaz", "Cristian", "Lourenco"},
+                {"Yelena", "Maria", "Lourenco"},
+                {"Yasmin", "Ruas", "Lourenco"},
+            };
+            for(int i = 0; i < pessoas.length; i++){
+                tabela.addCell(pessoas[i][0]);
+                tabela.addCell(pessoas[i][1]);
+                tabela.addCell(pessoas[i][2]);
+            }
             documento.add(tabela);
 
             documento.close();
